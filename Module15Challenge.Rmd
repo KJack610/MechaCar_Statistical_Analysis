@@ -1,0 +1,80 @@
+---
+title: "Module 15 Challenge"
+output: html_notebook
+---
+```{r}
+library(readr)
+library(tidyverse)
+library(dplyr)
+
+#MechaCar_mpg <- read_csv("Desktop/DA2/Module_15_R/Challenge/MechaCar_mpg.csv")
+#View(MechaCar_mpg)
+```
+Deliverable 1
+Import the MechaCar_mpg.csv file
+```{r}
+directory<-"/Users/khadijahm.jack/Desktop/DA2/Module_15_R/Challenge"
+Car1<-file.path(directory,"MechaCar_mpg.csv")
+MechaCar_mpg1<-read.csv(file = Car1, header=T)
+
+```
+Deliverable 2
+Import the Suspension_coil.csv file
+```{r}
+directory1<-"/Users/khadijahm.jack/Desktop/DA2/Module_15_R/Challenge"
+Coil1<-file.path(directory1,"MechaCar_mpg.csv")
+Suspension_Coil1<-read.csv(file = Coil1, header=T)
+```
+Deliverable 1
+Perform Linear Regression
+```{r}
+lm(mpg ~vehicle_length + vehicle_weight + spoiler_angle,ground_clearance + AWD, data=MechaCar_mpg1)
+```
+Deliverable 1: Summary function
+```{r}
+summary(lm(mpg ~vehicle_length + vehicle_weight + spoiler_angle,ground_clearance + AWD, data=MechaCar_mpg1))
+```
+Deliverable 2: Create Visualization  
+Create a Total Summary Data frame
+```{r}
+total_summary <- Suspension_Coil %>%  summarize(Mean=mean(PSI),
+                                                Median=median(PSI),
+                                                Variance=var(PSI),
+                                                SD=sd(PSI),.groups='keep')
+total_summary
+
+```
+Deliverable 2: Lot Summary Data Frame
+```{r}
+lot_summary <- Suspension_Coil %>% group_by(Manufacturing_Lot) %>% summarize(Mean=mean(PSI),
+                                                                                Median=median(PSI),
+                                                                                Variance=var(PSI),
+                                                                            SD=sd(PSI),.groups='keep')
+lot_summary
+```
+Deliverable 3: T-Test Suspension Coils
+```{r}
+t.test(Suspension_Coil$PSI, mu=1500)
+```
+Deliverable 3: T-Test Suspension Coils
+Lot1: Subset
+```{r}
+lot1 <- subset(Suspension_Coil,Manufacturing_Lot =="Lot1")
+lot1
+```
+Lot2: Subset
+```{r}
+lot2<- subset(Suspension_Coil,Manufacturing_Lot =="Lot2")
+lot2
+```
+Lot3: Subset
+```{r}
+lot3<- subset(Suspension_Coil,Manufacturing_Lot =="Lot3")
+lot3
+```
+T.Test for Lot1, Lot2, Lot3
+```{r}
+t.test(lot1$PSI, mu=1500)
+t.test(lot2$PSI, mu=1500)
+t.test(lot3$PSI, mu=1500)
+```
